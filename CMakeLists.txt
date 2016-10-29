@@ -10,6 +10,12 @@ set (PKGDATADIR "${DATADIR}/${CMAKE_PROJECT_NAME}")
 set (GETTEXT_PACKAGE ${CMAKE_PROJECT_NAME})
 set (EXEC_NAME ${CMAKE_PROJECT_NAME})
 
+# Provides new flag 'cmake .. -DFATAL_WARNINGS=ON`
+option (FATAL_WARNINGS "Compiler warnings fail build" OFF)
+if (FATAL_WARNINGS)
+    set (VALAC_OPTIONS ${VALAC_OPTIONS} --fatal-warnings)
+endif ()
+
 # CTest
 include (CTest)
 if (BUILD_TESTING)
@@ -70,6 +76,7 @@ PACKAGES
     posix
 OPTIONS
     --vapidir=${CMAKE_CURRENT_SOURCE_DIR}/vapi/
+    ${VALAC_OPTIONS}
 CUSTOM_VAPIS
     ${CMAKE_SOURCE_DIR}/vapi/config.vapi
 )
